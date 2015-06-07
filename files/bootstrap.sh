@@ -8,11 +8,12 @@ if [[ -e $PKG_HOME/.bootstrapped ]]; then
   exit 0
 fi
 
+mkdir -p `dirname $PYPY_HOME`
 wget -O - https://bitbucket.org/pypy/pypy/downloads/pypy-$PYPY_VERSION-linux64.tar.bz2 |tar -xjf -
-mv -n pypy-$PYPY_VERSION-linux64 pypy
+mv -n pypy-$PYPY_VERSION-linux64 $PYPY_HOME
 
 ## library fixup
-mkdir -p pypy/lib
+mkdir -p $PYPY_HOME/lib
 
 CURSES_LIB=/lib64/libncurses.so.5.9
 if [ -e "$CURSES_LIB" ]; then
