@@ -13,7 +13,11 @@ mv -n pypy-$PYPY_VERSION-linux64 pypy
 
 ## library fixup
 mkdir -p pypy/lib
-ln -snf /lib64/libncurses.so.5.9 $PYPY_HOME/lib/libtinfo.so.5
+
+CURSES_LIB=/lib64/libncurses.so.5.9
+if [ -e "$CURSES_LIB" ]; then
+    ln -snf $CURSES_LIB $PYPY_HOME/lib/libtinfo.so.5
+fi
 
 mkdir -p $PKG_HOME/bin
 
