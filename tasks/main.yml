@@ -12,4 +12,4 @@
   shell: curl -Lo {{coreos_pkg_home_bin}}/get-pip.py {{coreos_pip_script}} creates={{coreos_pkg_home_bin}}/get-pip.py
 
 - name: Install pip
-  shell: "{{ansible_python_interpreter}} {{coreos_pkg_home_bin}}/get-pip.py creates={{coreos_pypy_home}}/bin/pip"
+  shell: "{{coreos_python_interpreter}} {{coreos_pkg_home_bin}}/get-pip.py creates={{coreos_pypy_home}}/bin/pip"
