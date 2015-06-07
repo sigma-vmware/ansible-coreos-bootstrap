@@ -1,4 +1,5 @@
 ---
-- hosts: all
+- hosts: localhost
+  remote_user: root
   roles:
-    - coreos-bootstrap
+    - ansible-coreos-bootstrap
