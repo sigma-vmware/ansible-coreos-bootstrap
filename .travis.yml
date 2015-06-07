@@ -5,6 +5,9 @@ python: "2.7"
 env:
   global:
     - ANSIBLE_CONFIG=tests/test.cfg
+  matrix:
+    - TEST=default
+    - TEST=opt
 
 before_install:
   - sudo apt-get update -qq
@@ -14,12 +17,15 @@ install:
   - pip install ansible
 
 script:
-  - "ansible-playbook -i tests/inventory tests/test.yml --syntax-check"
-  - "ansible-playbook -i tests/inventory tests/test.yml --sudo"
-# Run the role/playbook again, checking to make sure it's idempotent.
+  # syntax check
+  - "ansible-playbook -i tests/$TEST/inventory tests/$TEST/test.yml --syntax-check"
+  # run playbook
+  - "ansible-playbook -i tests/$TEST/inventory tests/$TEST/test.yml --sudo"
+  # Run the playbook again, checking idempotence.
   - >
-    ansible-playbook -i tests/inventory tests/test.yml --sudo
+    ansible-playbook -i tests/$TEST/inventory tests/$TEST/test.yml --sudo
     | grep -q 'changed=0.*failed=0'
     && (echo 'Idempotence test: pass' && exit 0)
     || (echo 'Idempotence test: fail' && exit 1)
-  - "ansible -i tests/inventory all -m ping"
+  # pinging host, using bootstrapped python
+  - "ansible -i tests/$TEST/inventory all -m ping"
