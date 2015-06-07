@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/sigma/ansible-coreos-bootstrap.svg?branch=refactor)](https://travis-ci.org/sigma/ansible-coreos-bootstrap)
+
 # coreos-bootstrap
 
 In order to effectively run ansible, the target machine needs to have a python interpreter. Coreos machines are minimal and do not ship with any version of python. To get around this limitation we can install [pypy](http://pypy.org/), a lightweight python interpreter. The coreos-bootstrap role will install pypy for us and we will update our inventory file to use the installed python interpreter.
@@ -5,7 +7,7 @@ In order to effectively run ansible, the target machine needs to have a python i
 # install
 
 ```
-ansible-galaxy install defunctzombie.coreos-bootstrap
+ansible-galaxy install sigma.coreos-bootstrap
 ```
 
 # Configure your project
@@ -31,7 +33,7 @@ Now you can simply add the following to your playbook file and include it in you
 - hosts: coreos
   gather_facts: False
   roles:
-    - defunctzombie.coreos-bootstrap
+    - sigma.coreos-bootstrap
 ```
 
 Make sure that `gather_facts` is set to false, otherwise ansible will try to first gather system facts using python which is not yet installed!
@@ -43,10 +45,11 @@ After bootstrap, you can use ansible as usual to manage system services, install
 ```yaml
 - name: Nginx Example
   hosts: web
-  sudo: true
   tasks:
     - name: Start etcd
       service: name=etcd.service state=started
+      sudo: yes
+      sudo_user: root
 
     - name: Install docker-py
       pip: name=docker-py

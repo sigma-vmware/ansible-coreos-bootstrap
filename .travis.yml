@@ -3,17 +3,29 @@ language: python
 python: "2.7"
 
 env:
-  - SITE=test.yml
+  global:
+    - ANSIBLE_CONFIG=tests/test.cfg
+  matrix:
+    - TEST=default
+    - TEST=opt
 
 before_install:
   - sudo apt-get update -qq
-  - sudo apt-get install -y curl
+  - sudo apt-get install -y curl libncurses5
 
 install:
   - pip install ansible
 
-  # Add ansible.cfg to pick up roles path.
-  - "printf '[defaults]\nroles_path = ../' > ansible.cfg"
-
 script:
-  - "ansible-playbook -i tests/inventory tests/$SITE --syntax-check"
+  # syntax check
+  - "ansible-playbook -i tests/$TEST/inventory tests/$TEST/test.yml --syntax-check"
+  # run playbook
+  - "ansible-playbook -i tests/$TEST/inventory tests/$TEST/test.yml --sudo"
+  # Run the playbook again, checking idempotence.
+  - >
+    ansible-playbook -i tests/$TEST/inventory tests/$TEST/test.yml --sudo
+    | grep -q 'changed=0.*failed=0'
+    && (echo 'Idempotence test: pass' && exit 0)
+    || (echo 'Idempotence test: fail' && exit 1)
+  # pinging host, using bootstrapped python
+  - "ansible -i tests/$TEST/inventory all -m ping"
