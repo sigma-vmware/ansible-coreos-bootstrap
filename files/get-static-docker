@@ -1,0 +1,11 @@
+#!/bin/bash
+
+VERSION=$(docker --version | awk '{print $3}' | sed 's/,//')
+BINARY="/opt/bin/docker-$VERSION-static"
+LINK="/opt/bin/docker.static"
+
+if [ ! -e "$BINARY" ]; then
+    curl -L -o "$BINARY" "https://get.docker.com/builds/Linux/x86_64/docker-$VERSION"
+    chmod a+x "$BINARY"
+    ln -sf "$BINARY" "$LINK"
+fi
