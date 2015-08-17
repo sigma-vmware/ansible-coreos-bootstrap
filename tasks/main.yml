@@ -17,25 +17,3 @@
 - name: Install pip
   sudo: yes
   shell: "{{coreos_python_interpreter}} {{coreos_pkg_home_bin}}/get-pip.py creates={{coreos_pypy_home}}/bin/pip"
-
-- name: create /opt/bin
-  sudo: yes
-  sudo_user: root
-  file: path=/opt/bin state=directory mode=0755
-
-- name: install docker downloader
-  sudo: yes
-  sudo_user: root
-  copy: src=get-static-docker dest=/opt/bin/get-static-docker mode=0755
-
-- name: install docker downloader service
-  sudo: yes
-  sudo_user: root
-  copy: src=static-docker.service dest=/etc/systemd/system/static-docker.service
-  register: static_docker
-
-- name: Enable docker downloader service
-  service: name=static-docker.service enabled=yes state=started
-  sudo: yes
-  sudo_user: root
-  when: static_docker.changed
