@@ -35,4 +35,4 @@
   service: name=static-docker.service enabled=yes state=started
   sudo: yes
   sudo_user: root
-  when: static_docker.changed
+  when: static_docker.changed and ansible_lsb.id == "CoreOS"
