@@ -3,7 +3,7 @@
 coreos_pkg_home: "/home/core"
 coreos_pkg_home_bin: "{{coreos_pkg_home}}/bin"
 
-coreos_pypy_url: "https://bitbucket.org/pypy/pypy/downloads/pypy"
+coreos_pypy_url: "https://bitbucket.org/pypy/pypy/downloads/"
 coreos_pypy_version: "2.5.0"
 coreos_pypy_home: "{{coreos_pkg_home}}/pypy"
 

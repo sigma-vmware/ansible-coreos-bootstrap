@@ -9,7 +9,7 @@ if [[ -e $PKG_HOME/.bootstrapped ]]; then
 fi
 
 mkdir -p `dirname "$PYPY_HOME"`
-wget -O - "$PYPY_DOWNLOAD_URL-$PYPY_VERSION-linux64.tar.bz2" |tar -xjf -
+wget -O - "$PYPY_DOWNLOAD_URL/pypy-$PYPY_VERSION-linux64.tar.bz2" |tar -xjf -
 mv -n "pypy-$PYPY_VERSION-linux64" "$PYPY_HOME"
 
 ## library fixup
