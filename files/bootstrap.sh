@@ -9,16 +9,11 @@ if [[ -e $PKG_HOME/.bootstrapped ]]; then
 fi
 
 mkdir -p `dirname "$PYPY_HOME"`
-wget -O - "$PYPY_DOWNLOAD_URL/pypy-$PYPY_VERSION-linux64.tar.bz2" |tar -xjf -
-mv -n "pypy-$PYPY_VERSION-linux64" "$PYPY_HOME"
+wget -O - "$PYPY_DOWNLOAD_URL/pypy-$PYPY_VERSION-$PYPY_FLAVOR.tar.bz2" |tar -xjf -
+mv -n "pypy-$PYPY_VERSION-$PYPY_FLAVOR" "$PYPY_HOME"
 
 ## library fixup
 mkdir -p "$PYPY_HOME/lib"
-
-CURSES_LIB=/lib64/libncurses.so.5.9
-if [ -e "$CURSES_LIB" ]; then
-    ln -snf "$CURSES_LIB" "$PYPY_HOME/lib/libtinfo.so.5"
-fi
 
 mkdir -p "$PKG_HOME/bin"
 
