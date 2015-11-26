@@ -6,5 +6,6 @@ bootstrap_environment:
   PYPY_VERSION: "{{coreos_pypy_version}}"
   PYPY_FLAVOR: "{{coreos_pypy_flavor}}"
   PYPY_DOWNLOAD_URL: "{{coreos_pypy_url}}"
+  PYPY_SHA256: "{{coreos_pypy_sha256}}"
   COREOS_SSL_CERTS: "{{coreos_ssl_certs}}"
   ANSIBLE_FACTS_DIR: "{{ansible_facts_dir}}"

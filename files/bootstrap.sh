@@ -14,7 +14,16 @@ PYPY_INSTALL="$PKG_HOME/.pypy"
 
 cd /tmp
 
-wget -O - "$PYPY_DOWNLOAD_URL/pypy-$PYPY_VERSION-$PYPY_FLAVOR.tar.bz2" |tar -xjf -
+FILENAME="pypy-$PYPY_VERSION-$PYPY_FLAVOR.tar.bz2"
+curl -L -o "$FILENAME" "$PYPY_DOWNLOAD_URL/$FILENAME"
+
+if [[ -n "$PYPY_SHA256" ]]; then
+    echo "$PYPY_SHA256 $FILENAME" > "$FILENAME.sha256"
+    sha256sum -c "$FILENAME.sha256"
+fi
+
+tar -xjf "$FILENAME"
+rm -f "$FILENAME"
 
 $SUDO rm -rf "$PYPY_INSTALL"
 $SUDO mv -n "pypy-$PYPY_VERSION-$PYPY_FLAVOR" "$PYPY_INSTALL"
