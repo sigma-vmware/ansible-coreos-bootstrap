@@ -1,35 +1,29 @@
-#/bin/bash
+#!/bin/bash
 
 set -e
+set -x
 
 cd
 
-if [[ -e $PKG_HOME/.bootstrapped ]]; then
-  exit 0
-fi
-
 mkdir -p `dirname "$PYPY_HOME"`
 wget -O - "$PYPY_DOWNLOAD_URL/pypy-$PYPY_VERSION-$PYPY_FLAVOR.tar.bz2" |tar -xjf -
-mv -n "pypy-$PYPY_VERSION-$PYPY_FLAVOR" "$PYPY_HOME"
 
-## library fixup
-mkdir -p "$PYPY_HOME/lib"
+rm -rf "$PYPY_INSTALL"
+mv -n "pypy-$PYPY_VERSION-$PYPY_FLAVOR" "$PYPY_INSTALL"
+
+rm -rf "$PYPY_HOME"
+"$PYPY_INSTALL/bin/pypy" "$PYPY_INSTALL/bin/virtualenv-pypy" "$PYPY_HOME"
 
 mkdir -p "$PKG_HOME/bin"
 
-cat > "$PKG_HOME/bin/python" <<EOF
-#!/bin/bash
-LD_LIBRARY_PATH="$PYPY_HOME/lib:\$LD_LIBRARY_PATH" exec "$PYPY_HOME/bin/pypy" "\$@"
+ln -sf "$PYPY_HOME/bin/python" "$PKG_HOME/bin/python"
+ln -sf "$PYPY_HOME/bin/pip" "$PKG_HOME/bin/pip"
+
+FACTSD="/etc/ansible/facts.d"
+sudo mkdir -p "$FACTSD"
+sudo chown core "$FACTSD"
+
+cat > "$FACTSD/bootstrap.fact" <<EOF
+[pypy]
+version=$PYPY_VERSION
 EOF
-
-cat > "$PKG_HOME/bin/pip" <<EOF
-#!/bin/bash
-LD_LIBRARY_PATH="$PYPY_HOME/lib:\$LD_LIBRARY_PATH" exec "$PYPY_HOME/bin/pip" "\$@"
-EOF
-
-chmod +x "$PKG_HOME/bin/python"
-chmod +x "$PKG_HOME/bin/pip"
-
-"$PKG_HOME/bin/python" --version
-
-touch "$PKG_HOME/.bootstrapped"
