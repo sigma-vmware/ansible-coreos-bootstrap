@@ -28,8 +28,17 @@ PYPY_SSL_PATH=`$PYPY_INSTALL/bin/pypy -c 'from __future__ import print_function;
 sudo mkdir -p `dirname $PYPY_SSL_PATH`
 sudo ln -s $COREOS_SSL_CERTS $PYPY_SSL_PATH
 
+PIP_VERSION=`$PYPY_HOME/bin/pip --version | awk '{ print $2 }'`
+WHEEL_VERSION=`$PYPY_HOME/bin/wheel version | awk '{ print $2 }'`
+
 cat > "$FACTSD/bootstrap.fact" <<EOF
 [pypy]
 version=$PYPY_VERSION
 ssl_path=$PYPY_SSL_PATH
+
+[pip]
+version=$PIP_VERSION
+
+[wheel]
+version=$WHEEL_VERSION
 EOF
