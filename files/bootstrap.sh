@@ -18,7 +18,7 @@ FILENAME="pypy-$PYPY_VERSION-$PYPY_FLAVOR.tar.bz2"
 curl -L -o "$FILENAME" "$PYPY_DOWNLOAD_URL/$FILENAME"
 
 if [[ -n "$PYPY_SHA256" ]]; then
-    echo "$PYPY_SHA256 $FILENAME" > "$FILENAME.sha256"
+    echo "$PYPY_SHA256  $FILENAME" > "$FILENAME.sha256"
     sha256sum -c "$FILENAME.sha256"
 fi
 
