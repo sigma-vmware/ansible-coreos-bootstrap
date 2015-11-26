@@ -3,7 +3,7 @@
 set -e
 set -x
 
-if [[ `stat -c '%U' $PKG_HOME` != `whoami` ]]; then
+if [[ `stat -c '%U' $PKG_HOME 2>/dev/null || echo root` != `whoami` ]]; then
     SUDO="sudo"
 else
     SUDO=""
