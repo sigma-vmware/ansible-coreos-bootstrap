@@ -8,7 +8,4 @@ bootstrap_environment:
   PYPY_HOME: "{{coreos_pypy_home}}"
   PYPY_INSTALL: "{{coreos_pypy_install}}"
   PYPY_DOWNLOAD_URL: "{{coreos_pypy_url}}"
-
-bootstrap_ssl_path: >-
-  {{coreos_python_interpreter}} -c
-  'from __future__ import print_function; import ssl; print(ssl.get_default_verify_paths().openssl_capath)'
+  COREOS_SSL_CERTS: "{{coreos_ssl_certs}}"

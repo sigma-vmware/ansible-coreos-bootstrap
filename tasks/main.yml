@@ -17,16 +17,3 @@
 - name: Reload bootstrap facts
   setup: filter=ansible_local
   when: rebootstrap.changed
-
-- name: Get ssl certs path
-  shell: "{{bootstrap_ssl_path}}"
-  register: ssl_path
-  changed_when: False
-
-- name: create ssl certs dir
-  sudo: true
-  file: dest={{ssl_path.stdout | dirname}} state=directory
-
-- name: Make sure ssl certs are found
-  sudo: true
-  file: src={{coreos_ssl_certs}} dest={{ssl_path.stdout}} state=link
