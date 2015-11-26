@@ -9,3 +9,4 @@ bootstrap_environment:
   PYPY_INSTALL: "{{coreos_pypy_install}}"
   PYPY_DOWNLOAD_URL: "{{coreos_pypy_url}}"
   COREOS_SSL_CERTS: "{{coreos_ssl_certs}}"
+  ANSIBLE_FACTS_DIR: "{{ansible_facts_dir}}"

@@ -19,9 +19,8 @@ mkdir -p "$PKG_HOME/bin"
 ln -sf "$PYPY_HOME/bin/python" "$PKG_HOME/bin/python"
 ln -sf "$PYPY_HOME/bin/pip" "$PKG_HOME/bin/pip"
 
-FACTSD="/etc/ansible/facts.d"
-sudo mkdir -p "$FACTSD"
-sudo chown core "$FACTSD"
+sudo mkdir -p "$ANSIBLE_FACTS_DIR"
+sudo chown `whoami` "$ANSIBLE_FACTS_DIR"
 
 PYPY_SSL_PATH=`$PYPY_INSTALL/bin/pypy -c 'from __future__ import print_function; import ssl; print(ssl.get_default_verify_paths().openssl_capath)'`
 
@@ -31,7 +30,7 @@ sudo ln -s $COREOS_SSL_CERTS $PYPY_SSL_PATH
 PIP_VERSION=`$PYPY_HOME/bin/pip --version | awk '{ print $2 }'`
 WHEEL_VERSION=`$PYPY_HOME/bin/wheel version | awk '{ print $2 }'`
 
-cat > "$FACTSD/bootstrap.fact" <<EOF
+cat > "$ANSIBLE_FACTS_DIR/bootstrap.fact" <<EOF
 [pypy]
 version=$PYPY_VERSION
 ssl_path=$PYPY_SSL_PATH
