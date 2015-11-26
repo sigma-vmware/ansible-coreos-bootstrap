@@ -26,6 +26,7 @@ tar -xjf "$FILENAME"
 rm -f "$FILENAME"
 
 $SUDO rm -rf "$PYPY_INSTALL"
+$SUDO mkdir -p "$PYPY_INSTALL"
 $SUDO mv -n "pypy-$PYPY_VERSION-$PYPY_FLAVOR" "$PYPY_INSTALL"
 
 $SUDO mkdir -p `dirname "$PYPY_HOME"`
