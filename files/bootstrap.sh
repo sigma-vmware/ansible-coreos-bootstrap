@@ -51,6 +51,9 @@ sudo ln -sf $COREOS_SSL_CERTS $PYPY_SSL_PATH
 PIP_VERSION=`$PYPY_HOME/bin/pip --version | awk '{ print $2 }'`
 WHEEL_VERSION=`$PYPY_HOME/bin/wheel version | awk '{ print $2 }'`
 
+# install needed modules
+$PYPY_HOME/bin/pip install docker-py
+
 cat > "$ANSIBLE_FACTS_DIR/bootstrap.fact" <<EOF
 [pypy]
 version=$PYPY_VERSION
