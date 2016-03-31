@@ -38,6 +38,7 @@ $SUDO mkdir -p "$PKG_HOME/bin"
 
 $SUDO ln -sf "$PYPY_HOME/bin/python" "$PKG_HOME/bin/python"
 $SUDO ln -sf "$PYPY_HOME/bin/pip" "$PKG_HOME/bin/pip"
+$SUDO ln -sf "$PYPY_HOME/bin/wheel" "$PKG_HOME/bin/wheel"
 
 sudo mkdir -p "$ANSIBLE_FACTS_DIR"
 sudo chown `whoami` "$ANSIBLE_FACTS_DIR"
