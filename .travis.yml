@@ -7,7 +7,7 @@ env:
     - ANSIBLE_CONFIG=tests/test.cfg
   matrix:
     - TEST=default
-    - TEST=opt
+    # - TEST=opt
 
 before_install:
   - sudo apt-get update -qq
@@ -20,7 +20,7 @@ script:
   # syntax check
   - "ansible-playbook -i tests/$TEST/inventory tests/$TEST/test.yml --syntax-check"
   # run playbook
-  - "ansible-playbook -i tests/$TEST/inventory tests/$TEST/test.yml --sudo"
+  - "ansible-playbook -i tests/$TEST/inventory tests/$TEST/test.yml --sudo -vvv"
   # Run the playbook again, checking idempotence.
   - >
     ansible-playbook -i tests/$TEST/inventory tests/$TEST/test.yml --sudo
