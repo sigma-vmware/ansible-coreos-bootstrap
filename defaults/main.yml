@@ -5,7 +5,7 @@ coreos_pkg_home: "/home/core"
 
 coreos_pypy_url: "https://bitbucket.org/squeaky/portable-pypy/downloads"
 coreos_pypy_flavor: "linux_x86_64-portable"
-coreos_pypy_version: "4.0.1"
-coreos_pypy_sha256: "b3803f6dd9bbb964f7d322aa4aeb93191ff0ebe573428c1d2014ea26da49ff53"
+coreos_pypy_version: "5.1.1"
+coreos_pypy_sha256: "c0502d8db1cc2b81513cc6047813669b0a561cb20e41d60e179f51fe8657a794"
 
 ansible_facts_dir: "/etc/ansible/facts.d"
