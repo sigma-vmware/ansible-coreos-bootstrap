@@ -1,5 +1,16 @@
 [![Build Status](https://travis-ci.org/vmware/ansible-coreos-bootstrap.svg?branch=master)](https://travis-ci.org/vmware/ansible-coreos-bootstrap)
 
+IMPORTANT: after ansible 2.1, the following trick is no longer valid:
+```
+ansible_python_interpreter="PATH=/home/core/bin:$PATH python"
+```
+
+The good news is that it's no longer needed either. The following now works and
+is compatible with old and new ansible (and is simpler):
+```
+ansible_python_interpreter="/home/core/bin/python"
+```
+
 # coreos-bootstrap
 
 In order to effectively run ansible, the target machine needs to have a python interpreter. Coreos machines are minimal and do not ship with any version of python. To get around this limitation we can install [pypy](http://pypy.org/), a lightweight python interpreter. The coreos-bootstrap role will install pypy for us and we will update our inventory file to use the installed python interpreter.
@@ -22,7 +33,7 @@ host-02
 
 [coreos:vars]
 ansible_ssh_user=core
-ansible_python_interpreter="PATH=/home/core/bin:$PATH python"
+ansible_python_interpreter="/home/core/bin/python"
 ```
 
 This will configure ansible to use the python interpreter at `/home/core/bin/python` which will be created by the coreos-bootstrap role.
