@@ -1,5 +1,6 @@
 ---
 - hosts: localhost
+  gather_facts: False
   remote_user: root
   roles:
     - {role: "ansible-coreos-bootstrap", coreos_pkg_home: "/opt"}
