@@ -29,10 +29,21 @@ $SUDO mkdir -p "$PYPY_INSTALL"
 $SUDO rm -rf "$PYPY_INSTALL"
 $SUDO mv -n "pypy-$PYPY_VERSION-$PYPY_FLAVOR" "$PYPY_INSTALL"
 
+# make sure PATH contains the location where pip, wheel and friends are
+# so that ansible knows where to find them
+# this is needed since ansible 2.1 changed the way ansible_python_interpreter
+# is parsed
+cat <<EOF > "$PYPY_INSTALL/site-packages/sitecustomize.py"
+import os
+import sys
+
+os.environ["PATH"] += os.pathsep + os.path.sep.join([sys.prefix, "bin"])
+EOF
+
 $SUDO mkdir -p `dirname "$PYPY_HOME"`
 $SUDO rm -rf "$PYPY_HOME"
 
-$SUDO "$PYPY_INSTALL/bin/pypy" "$PYPY_INSTALL/bin/virtualenv-pypy" "$PYPY_HOME"
+$SUDO "$PYPY_INSTALL/bin/pypy" "$PYPY_INSTALL/bin/virtualenv-pypy" --system-site-packages "$PYPY_HOME"
 
 $SUDO mkdir -p "$PKG_HOME/bin"
 
