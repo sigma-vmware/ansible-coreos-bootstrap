@@ -20,7 +20,7 @@ Current version: 0.6.0
 # install
 
 ```
-ansible-galaxy install sigma.coreos-bootstrap
+ansible-galaxy install vmware.coreos-bootstrap
 ```
 
 # Configure your project
@@ -46,7 +46,7 @@ Now you can simply add the following to your playbook file and include it in you
 - hosts: coreos
   gather_facts: False
   roles:
-    - sigma.coreos-bootstrap
+    - vmware.coreos-bootstrap
 ```
 
 Make sure that `gather_facts` is set to false, otherwise ansible will try to first gather system facts using python which is not yet installed!
