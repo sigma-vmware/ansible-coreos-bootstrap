@@ -5,6 +5,10 @@ galaxy_info:
   company: VMware
   license: MIT
   min_ansible_version: 1.5
-  categories:
+  platforms:
+    - name: CoreOS
+      versions:
+        - all
+  galaxy_tags:
     - system
 dependencies: []
