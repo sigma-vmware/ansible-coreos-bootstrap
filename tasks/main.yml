@@ -1,14 +1,6 @@
 ---
 # tasks file for sigma.coreos-bootstrap
 
-- name: wait for ssh to be up
-  local_action:
-    module: wait_for
-    args:
-      host: "{{ ansible_host | default(ansible_ssh_host | default(inventory_hostname)) }}"
-      port: "{{ ansible_port | default(ansible_ssh_port | default (22)) }}"
-      search_regex: "SSH"
-
 - name: Make sure a version of python exists
   script: bootstrap.sh creates=/etc/ansible/facts.d/bootstrap.fact
   environment: "{{bootstrap_environment}}"
