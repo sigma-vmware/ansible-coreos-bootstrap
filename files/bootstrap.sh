@@ -56,8 +56,10 @@ sudo chown `whoami` "$ANSIBLE_FACTS_DIR"
 
 PYPY_SSL_PATH=`$PYPY_INSTALL/bin/pypy -c 'from __future__ import print_function; import ssl; print(ssl.get_default_verify_paths().openssl_capath)'`
 
-sudo mkdir -p `dirname $PYPY_SSL_PATH`
-sudo ln -sf $COREOS_SSL_CERTS $PYPY_SSL_PATH
+if [ $PYPY_SSL_PATH != "None" ]; then
+    sudo mkdir -p `dirname $PYPY_SSL_PATH`
+    sudo ln -sf $COREOS_SSL_CERTS $PYPY_SSL_PATH
+fi
 
 PIP_VERSION=`$PYPY_HOME/bin/pip --version | awk '{ print $2 }'`
 WHEEL_VERSION=`$PYPY_HOME/bin/wheel version | awk '{ print $2 }'`
